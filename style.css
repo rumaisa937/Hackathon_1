@@ -78,7 +78,7 @@ nav {
   transform: scale(1.05);
 }
 
-/* ========== FORM STYLES ========== */
+/* ========== FORM & DONATION STYLES ========== */
 .form-container {
   max-width: 500px;
   margin: auto;
@@ -108,7 +108,7 @@ form label {
 form input,
 form select,
 form button {
-  width: 100%; /* Ensure everything matches in width */
+  width: 100%;
   padding: 12px;
   margin-top: 6px;
   border-radius: 6px;
@@ -119,6 +119,7 @@ form button {
 
 form input[type="text"],
 form input[type="email"],
+form input[type="number"],
 form input[type="date"],
 form input[type="time"],
 form select {
@@ -146,7 +147,7 @@ form button:hover {
   background-color: #38a169;
 }
 
-/* Hide / Show logic */
+/* Conditional display (used for school + custom donation fields) */
 .hidden {
   display: none;
 }

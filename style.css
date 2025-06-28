@@ -89,6 +89,12 @@ nav {
   color: white;
 }
 
+/* Optional narrow variant */
+.form-container.narrow {
+  max-width: 500px;
+  margin: 100px auto;
+}
+
 .form-container h1 {
   text-align: center;
   color: #4CAF50;
@@ -112,27 +118,25 @@ nav {
   flex-direction: column;
 }
 
-label {
-  margin-top: 20px;
+/* Label and Input spacing tweaks */
+form label {
+  display: block;
+  margin-top: 10px;      /* space above label */
+  margin-bottom: 6px;    /* space between label and input */
   font-weight: bold;
 }
 
-input,
-select,
-textarea,
-button {
+form input,
+form select,
+form textarea {
+  margin-top: 0;
+  margin-bottom: 6px;   /* space below input */
   width: 100%;
   padding: 12px;
-  margin-top: 6px;
   border-radius: 6px;
   border: none;
   font-size: 1rem;
   box-sizing: border-box;
-}
-
-input,
-select,
-textarea {
   background-color: #f0f4f8;
   color: #333;
 }
@@ -156,6 +160,10 @@ button {
   margin-top: 30px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  border: none;
 }
 
 button:hover {

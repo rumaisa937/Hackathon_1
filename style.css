@@ -1,5 +1,71 @@
+/* Reset some default spacing */
+* {
+  box-sizing: border-box;
+}
+
 body {
-    font-family: sans-serif;
-    background-color: rgb(21, 126, 91);
-    margin: 20px;
+  font-family: 'Open Sans', sans-serif;
+  background-color: #155e3f;
+  color: #f0f0f0;
+  margin: 0;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+  color: #e2e8f0;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #cbd5e1;
+  margin-top: 0;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: auto;
+}
+
+.nav-link {
+  font-weight: 600;
+  text-decoration: none;
+  padding: 14px 28px;
+  background-color: #2f855a;
+  border-radius: 6px;
+  color: #e6fffa;
+  box-shadow: 0 4px 6px rgba(45, 115, 87, 0.4);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  font-size: 1.1rem;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  background-color: #38a169;
+  box-shadow: 0 6px 10px rgba(56, 161, 105, 0.7);
+  outline: none;
+}
+
+footer {
+  text-align: center;
+  margin-top: 60px;
+  color: #a0aec0;
+  font-size: 0.9rem;
+  font-style: italic;
 }

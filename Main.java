@@ -1,16 +1,28 @@
-/*
- * Project: FarmTrip Web App
- * Language: Java with HTML for frontend
- * Note: This project does not rely on external frameworks (only HTML & Java)
- * This is a basic simulation, not fully deployed with database/email/payment services.
- */
+import java.io.*;
 
-// File: Main.java (Base class)
-public class Main {
-    public String renderHeader(String title) {
-        return "<html><head><title>" + title + "</title></head><body>";
+public class Main extends HttpServlet {
+    protected void renderPage(HttpServletResponse res, String htmlFilePath) throws IOException {
+        res.setContentType("text/html");
+        PrintWriter out = res.getWriter();
+        BufferedReader reader = new BufferedReader(new FileReader(htmlFilePath));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            out.println(line);
+        }
+        reader.close();
     }
-    public String renderFooter() {
-        return "</body></html>";
+
+    private static class HttpServletResponse {
+
+        public HttpServletResponse() {
+        }
+
+        private void setContentType(String texthtml) {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        private PrintWriter getWriter() {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
     }
 }

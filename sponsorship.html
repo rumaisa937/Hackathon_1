@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apply for Sponsorship - FarmConnect</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Open+Sans&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="form-container">
+    <h1>Apply for Sponsorship</h1>
+    <p style="text-align: center; margin-top: -10px; margin-bottom: 30px;">
+      If your school is unable to fund a field trip, apply here for sponsorship support from our donation fund.
+    </p>
+
+    <form id="sponsorshipForm">
+      <div class="form-grid">
+        <!-- Left column (now School Info) -->
+        <div class="left-col">
+          <label for="isTeacher">Are you a teacher?</label>
+          <select id="isTeacher" name="isTeacher" required>
+            <option value="">-- Select --</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+
+          <label for="schoolName">School Name</label>
+          <input type="text" id="schoolName" name="schoolName" required />
+
+          <label for="schoolEmail">School Email</label>
+          <input type="email" id="schoolEmail" name="schoolEmail" required />
+
+          <label for="numStudents">Number of Students</label>
+          <input type="number" id="numStudents" name="numStudents" required min="1" />
+        </div>
+
+        <!-- Right column (now Tour Details + Reason) -->
+        <div class="right-col">
+          <label for="date">Preferred Date</label>
+          <input type="date" id="date" name="date" required />
+
+          <label for="farm">Farm You Want to Visit</label>
+          <input type="text" id="farm" name="farm" required />
+
+          <label for="reason">Why should your school be sponsored?</label>
+          <textarea id="reason" name="reason" rows="6" required></textarea>
+        </div>
+      </div>
+
+      <button type="submit">Submit Application</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("sponsorshipForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      alert("Thank you! Your sponsorship request has been submitted.");
+      this.reset();
+    });
+  </script>
+</body>
+</html>

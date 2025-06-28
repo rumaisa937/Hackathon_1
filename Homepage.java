@@ -7,4 +7,12 @@ public class Homepage extends Main {
             "<a href='trip_form.html'>Request a Trip</a> | <a href='donate.html'>Donate</a>" +
             renderFooter();
     }
+
+    private String renderHeader(String farmTrip_Homepage) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    private String renderFooter() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

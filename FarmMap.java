@@ -10,4 +10,12 @@ public class FarmMap extends Main {
             "</script>" +
             renderFooter();
     }
+
+    private String renderHeader(String farm_Map) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    private String renderFooter() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

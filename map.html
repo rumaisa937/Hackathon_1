@@ -1,32 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farm Map</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Farms in Ontario</title>
 
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-     crossorigin=""/>
-     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-     crossorigin=""></script>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
 
-     <style>
-        #map { height: 180px; }
-     </style>
+  <style>
+    /* Container matching other pages */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Open Sans', sans-serif;
+      background-image: url('images/homepage2.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.4);
+      z-index: -1;
+    }
+
+    .page-container {
+      max-width: 1000px;
+      margin: 80px auto;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 40px;
+      border-radius: 12px;
+      display: flex;
+      gap: 40px;
+      color: white;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    }
+
+    .description {
+      flex: 1;
+      font-size: 1.1rem;
+      line-height: 1.5;
+    }
+
+    h1 {
+      color: #4caf50;
+      font-family: 'Montserrat', sans-serif;
+      margin-bottom: 20px;
+    }
+
+    #map {
+      flex: 1;
+      height: 500px;
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    }
+  </style>
 </head>
 <body>
-    <h1>FARM MAP</h1>
+  <div class="page-container">
+    <div class="description">
+      <h1>Farms in Ontario</h1>
+      <p>
+        Explore the diverse farms across Ontario categorized by type: dairy, vegetable, poultry, and more.
+        Use the interactive map to learn about each farm’s location, products, and opportunities for educational visits.
+      </p>
+    </div>
+
     <div id="map"></div>
-    
-</body>
-<script>
-    var map = L.map('map').setView([43.65, -79.38], 13);
+  </div>
+
+  <script>
+    var map = L.map('map').setView([43.65, -79.38], 8);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-}).addTo(map);
-</script>
+      maxZoom: 19,
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    // Example marker, add more or your own
+    L.marker([43.65, -79.38]).addTo(map)
+      .bindPopup('Example Farm Location')
+      .openPopup();
+  </script>
+</body>
 </html>

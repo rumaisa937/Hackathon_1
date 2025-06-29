@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Donation Confirmation - FarmConnect</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="payment.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Open+Sans&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="form-container narrow">
+    <div class="confirmation-content">
+      <div class="success-icon">✓</div>
+      <h1>Thank You!</h1>
+      <p class="confirmation-message">
+        Your donation has been successfully processed. You will receive a confirmation email shortly.
+      </p>
+      
+      <div class="donation-details">
+        <h3>Donation Summary</h3>
+        <div class="detail-row">
+          <span class="label">Amount:</span>
+          <span class="value" id="donationAmount">$0.00</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Payment Method:</span>
+          <span class="value" id="paymentMethod">-</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Transaction ID:</span>
+          <span class="value" id="transactionId">-</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Date:</span>
+          <span class="value" id="donationDate">-</span>
+        </div>
+      </div>
+      
+      <div class="impact-section">
+        <h3>Your Impact</h3>
+        <p>
+          Your generous donation will help support school farm trips and sustainable food education 
+          across Ontario. Every dollar makes a difference in connecting students with local farms 
+          and teaching them about where their food comes from.
+        </p>
+      </div>
+      
+      <div class="action-buttons">
+        <a href="index.html" class="btn btn-primary">Return to Homepage</a>
+        <a href="donation.html" class="btn btn-secondary">Make Another Donation</a>
+      </div>
+      
+      <div class="social-share">
+        <p>Share your generosity:</p>
+        <div class="share-buttons">
+          <button class="share-btn facebook" onclick="shareOnFacebook()">
+            <span>Facebook</span>
+          </button>
+          <button class="share-btn twitter" onclick="shareOnTwitter()">
+            <span>Twitter</span>
+          </button>
+          <button class="share-btn email" onclick="shareViaEmail()">
+            <span>Email</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Get URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const amount = urlParams.get('amount');
+    const method = urlParams.get('method');
+    
+    // Update page content
+    if (amount) {
+      document.getElementById('donationAmount').textContent = `$${parseFloat(amount).toFixed(2)}`;
+    }
+    
+    if (method) {
+      document.getElementById('paymentMethod').textContent = method;
+    }
+    
+    // Generate transaction ID
+    const transactionId = 'TXN_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9).toUpperCase();
+    document.getElementById('transactionId').textContent = transactionId;
+    
+    // Set current date
+    const currentDate = new Date().toLocaleDateString('en-CA', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+    document.getElementById('donationDate').textContent = currentDate;
+    
+    // Social sharing functions
+    function shareOnFacebook() {
+      const url = encodeURIComponent(window.location.href);
+      const text = encodeURIComponent(`I just donated $${amount} to FarmConnect to support school farm trips and sustainable food education!`);
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`, '_blank');
+    }
+    
+    function shareOnTwitter() {
+      const text = encodeURIComponent(`I just donated $${amount} to @FarmConnect to support school farm trips and sustainable food education! 🌱`);
+      const url = encodeURIComponent(window.location.href);
+      window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+    }
+    
+    function shareViaEmail() {
+      const subject = encodeURIComponent('I donated to FarmConnect!');
+      const body = encodeURIComponent(`Hi there!\n\nI just made a donation of $${amount} to FarmConnect to support school farm trips and sustainable food education across Ontario.\n\nYou can learn more about this great cause at: ${window.location.origin}\n\nBest regards`);
+      window.open(`mailto:?subject=${subject}&body=${body}`, '_blank');
+    }
+  </script>
+</body>
+</html> 

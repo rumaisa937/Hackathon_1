@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Make a Donation - FarmConnect</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="payment.css" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Open+Sans&display=swap" rel="stylesheet" />
+  <!-- Stripe SDK -->
+  <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
   <div class="form-container narrow">
@@ -15,63 +18,118 @@
     </p>
 
     <form id="donationForm">
-      <label for="donorName">Your Name</label>
-      <input type="text" id="donorName" name="donorName" required />
+      <!-- Donor Information -->
+      <div class="form-section">
+        <h3>Your Information</h3>
+        <label for="donorName">Your Name</label>
+        <input type="text" id="donorName" name="donorName" required />
 
-      <label for="email">Your Email</label>
-      <input type="email" id="email" name="email" required />
+        <label for="email">Your Email</label>
+        <input type="email" id="email" name="email" required />
 
-      <label for="presetAmount">Donation Amount (CAD)</label>
-      <select id="presetAmount" name="presetAmount" onchange="toggleCustomAmount(this)" required>
-        <option value="" disabled selected style="color: #888;">-- Select an amount --</option>
-        <option value="5">$5</option>
-        <option value="10">$10</option>
-        <option value="20">$20</option>
-        <option value="50">$50</option>
-        <option value="custom">Other</option>
-      </select>
-
-      <div id="customAmountContainer" class="hidden">
-        <label for="customAmount">Enter Custom Amount</label>
-        <input type="number" id="customAmount" name="customAmount" min="1" step="0.01" />
+        <label for="phone">Phone Number (Optional)</label>
+        <input type="tel" id="phone" name="phone" />
       </div>
 
-      <label for="message">Message (Optional)</label>
-      <input type="text" id="message" name="message" />
+      <!-- Donation Amount -->
+      <div class="form-section">
+        <h3>Donation Amount</h3>
+        <label for="presetAmount">Select Amount (CAD)</label>
+        <select id="presetAmount" name="presetAmount" onchange="toggleCustomAmount(this)" required>
+          <option value="" disabled selected style="color: #888;">-- Select an amount --</option>
+          <option value="5">$5</option>
+          <option value="10">$10</option>
+          <option value="20">$20</option>
+          <option value="50">$50</option>
+          <option value="100">$100</option>
+          <option value="custom">Other</option>
+        </select>
 
-      <button type="submit">Donate Now</button>
+        <div id="customAmountContainer" class="hidden">
+          <label for="customAmount">Enter Custom Amount (CAD)</label>
+          <input type="number" id="customAmount" name="customAmount" min="1" step="0.01" placeholder="Enter amount" />
+        </div>
+
+        <label for="message">Message (Optional)</label>
+        <textarea id="message" name="message" rows="3" placeholder="Share why you're donating..."></textarea>
+      </div>
+
+      <!-- Payment Method Selection -->
+      <div class="form-section">
+        <h3>Payment Method</h3>
+        <div class="payment-methods">
+          <div class="payment-option" onclick="selectPaymentMethod('applepay')">
+            <input type="radio" id="applepay" name="paymentMethod" value="applepay" />
+            <label for="applepay" class="payment-label">
+              <img src="https://developer.apple.com/design/human-interface-guidelines/apple-pay/images/apple-pay-mark_2x.png" alt="Apple Pay" />
+              <span>Apple Pay</span>
+            </label>
+          </div>
+
+          <div class="payment-option" onclick="selectPaymentMethod('card')">
+            <input type="radio" id="card" name="paymentMethod" value="card" />
+            <label for="card" class="payment-label">
+              <img src="https://cdn-icons-png.flaticon.com/512/179/179249.png" alt="Credit Card" />
+              <span>Credit/Debit Card</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Credit Card Form (Hidden by default) -->
+      <div id="cardForm" class="form-section hidden">
+        <h3>Card Details</h3>
+        
+        <label for="cardNumber">Card Number</label>
+        <input type="text" id="cardNumber" name="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" />
+
+        <div class="card-row">
+          <div class="card-col">
+            <label for="expiryDate">Expiry Date</label>
+            <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YY" maxlength="5" />
+          </div>
+          <div class="card-col">
+            <label for="cvv">CVV</label>
+            <input type="text" id="cvv" name="cvv" placeholder="123" maxlength="4" />
+          </div>
+        </div>
+
+        <label for="cardholderName">Cardholder Name</label>
+        <input type="text" id="cardholderName" name="cardholderName" placeholder="Name on card" />
+
+        <label for="bank">Select Your Bank (Optional)</label>
+        <select id="bank" name="bank">
+          <option value="">-- Select your bank --</option>
+          <option value="rbc">Royal Bank of Canada (RBC)</option>
+          <option value="td">TD Canada Trust</option>
+          <option value="scotiabank">Scotiabank</option>
+          <option value="bmo">Bank of Montreal (BMO)</option>
+          <option value="cibc">CIBC</option>
+          <option value="national">National Bank</option>
+          <option value="hsbc">HSBC Bank Canada</option>
+          <option value="desjardins">Desjardins</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <!-- Apple Pay Button Container -->
+      <div id="applePayButtonContainer" class="hidden">
+        <button type="button" id="applePayButton" class="apple-pay-button">
+          <span class="apple-pay-text">Pay with Apple Pay</span>
+        </button>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" id="submitButton" onclick="processPaymentSuccess('card', { amount: 100 })">Donate Now</button>
     </form>
   </div>
 
-  <script>
-    function toggleCustomAmount(select) {
-      const customAmount = document.getElementById("customAmountContainer");
-      if (select.value === "custom") {
-        customAmount.classList.remove("hidden");
-        document.getElementById("customAmount").required = true;
-      } else {
-        customAmount.classList.add("hidden");
-        document.getElementById("customAmount").value = "";
-        document.getElementById("customAmount").required = false;
-      }
-    }
+  <!-- Loading Overlay -->
+  <!-- <div id="loadingOverlay" class="loading-overlay hidden">
+    <div class="loading-spinner"></div>
+    <p>Processing your donation...</p>
+  </div> -->
 
-    document.getElementById('donationForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      const preset = document.getElementById("presetAmount").value;
-      const custom = document.getElementById("customAmount").value;
-      const amount = preset === "custom" ? custom : preset;
-
-      if (!amount || isNaN(amount) || parseFloat(amount) <= 0) {
-        alert("Please enter a valid donation amount.");
-        return;
-      }
-
-      alert("Thank you for your donation of $" + parseFloat(amount).toFixed(2) + "!");
-      this.reset();
-      document.getElementById("customAmountContainer").classList.add("hidden");
-    });
-  </script>
+  <script src="payment.js"></script>
 </body>
 </html>

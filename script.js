@@ -5,10 +5,34 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 var marker = L.marker([43.77, -79.23]).addTo(map);
 
-fetch('farms.csv').then(response => response.text()).then(csvText => {const lines = csvText.split('\n');
-    lines.forEach((line, index) => {const values = line.split(',');
-        console.log(values[2]);
-        console.log(values[3]);});
-        L.marker([values[2], values[3]]).addTo(map).bindPopup(`<strong>${name}</strong>`);
+fetch('farms.csv').then(response => response.text()).then(csvText => {
+    console.log('CSV content:', csvText);
+    const lines = csvText.split('\n');
+    console.log('Number of lines:', lines.length);
     
-    }).catch(error => {console.error('Error fetching farms data:', error);});
+    lines.forEach((line, index) => {
+        if (line.trim() === '') return; // Skip empty lines
+        
+        const values = line.split(',');
+        console.log('Line', index, 'values:', values);
+        
+        if (values.length >= 4) {
+            const name = values[1];
+            const lat = parseFloat(values[2]);
+            const lng = parseFloat(values[3]);
+            const products = values[4] ? values[4].replace(/"/g, '') : '';
+            
+            console.log('Creating marker for:', name, 'at', lat, lng);
+            
+            try {
+                const farmMarker = L.marker([lat, lng]).addTo(map);
+                farmMarker.bindPopup(`<strong>${name}</strong><br>Products: ${products}`);
+                console.log('Marker created successfully for:', name);
+            } catch (error) {
+                console.error('Error creating marker for:', name, error);
+            }
+        }
+    });
+}).catch(error => {
+    console.error('Error fetching farms data:', error);
+});

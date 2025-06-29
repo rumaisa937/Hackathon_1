@@ -14,7 +14,6 @@
     crossorigin=""></script>
 
   <style>
-    /* Container matching other pages */
     body {
       margin: 0;
       padding: 0;
@@ -64,9 +63,9 @@
 
     #map {
       flex: 1;
-      height: 500px;
+      height: 500px;  /* increased height */
       border-radius: 8px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);  /* subtle shadow */
     }
   </style>
 </head>
@@ -75,7 +74,7 @@
     <div class="description">
       <h1>Farms in Ontario</h1>
       <p>
-        Explore the diverse farms across Ontario categorized by type: dairy, vegetable, poultry, and more.
+        Explore the diverse farms across Ontario.
         Use the interactive map to learn about each farm’s location, products, and opportunities for educational visits.
       </p>
     </div>
@@ -83,17 +82,14 @@
     <div id="map"></div>
   </div>
 
+  <script src="script.js"></script>
+
   <script>
-    var map = L.map('map').setView([43.65, -79.38], 8);
+    var map = L.map('map').setView([43.65, -79.38], 13);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
-
-    // Example marker, add more or your own
-    L.marker([43.65, -79.38]).addTo(map)
-      .bindPopup('Example Farm Location')
-      .openPopup();
   </script>
 </body>
 </html>

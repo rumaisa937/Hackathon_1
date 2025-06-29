@@ -103,7 +103,7 @@ nav {
   margin-bottom: 20px;
 }
 
-/* Two-Column Layout */
+/* Form Layout */
 .form-grid {
   display: flex;
   flex-wrap: wrap;
@@ -121,8 +121,8 @@ nav {
 /* Label and Input spacing tweaks */
 form label {
   display: block;
-  margin-top: 10px;      /* space above label */
-  margin-bottom: 6px;    /* space between label and input */
+  margin-top: 10px;
+  margin-bottom: 6px;
   font-weight: bold;
 }
 
@@ -130,7 +130,7 @@ form input,
 form select,
 form textarea {
   margin-top: 0;
-  margin-bottom: 6px;   /* space below input */
+  margin-bottom: 6px;
   width: 100%;
   padding: 12px;
   border-radius: 6px;
@@ -173,4 +173,25 @@ button:hover {
 /* Utility */
 .hidden {
   display: none;
+}
+
+/* ========== TWO COLUMN STYLE FOR .two-column FORM PAGES ONLY ========== */
+.two-column form .form-columns {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.two-column form .column {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Responsive fallback */
+@media (max-width: 700px) {
+  .two-column form .form-columns {
+    flex-direction: column;
+  }
 }
